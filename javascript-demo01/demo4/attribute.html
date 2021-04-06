@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript">
+        /*
+        get / removeAttribute("属性名"); //获取/移除属性
+        setAttribute("属性名", "属性值"); //设置属性
+
+        与常规的 节点元素.属性名 相比较的话有很多优势
+        1.常规的访问和获取,只能获取标准的属性名,比如:className, title,name等,不能操作自定义的属性名,无论是访问还是设置都不行.而attribute可以操作非标准的属性.
+        2.常规的操作是通过 节点名称.className 来设置/获取class的属性值; 而attribute是通过class来设置/获取的
+        3.常规的操作,无法移除属性,只能将属性值设置为空串,而attribute可以真正移除属性.
+      */
+        window.onload = function () {
+            let elementById = document.getElementById("div1");
+            console.log(elementById.title);
+
+            //设置获取
+            elementById.setAttribute("title", "abc");
+            console.log(elementById.getAttribute("title"));
+
+            //非标准属性
+            elementById.setAttribute("x", 100);
+            console.log(elementById.getAttribute("x"));
+
+            //常规方法无法获取,这两种都无法获取.
+            console.log(elementById["x"]);
+            console.log(elementById.x);
+
+            //移除属性
+            elementById.title = "" //无法移除
+            elementById.removeAttribute("xiao") //可以真正的移除
+
+        };
+    </script>
+</head>
+<body>
+<div id="div1" title="hello" class="box" xiao="ax">12</div>
+</body>
+</html>

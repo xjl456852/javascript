@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>秒表</title>
+    <script type="text/javascript">
+
+        function $(id) {
+            return document.getElementById(id);
+        }
+
+
+        //加载后执行
+        window.onload = function () {
+            var count = 0;
+            var interval = null;
+            $("start").onclick = function () {
+                interval = setInterval(function () {
+                    count ++;
+                    $("id_second").innerHTML = show(parseInt(count % 60));
+                    $("id_minute").innerHTML = show(parseInt((count / 60) % 60));
+                    $("id_hour").innerHTML = show(parseInt(count / 3600));
+                },100);
+
+            }
+            $("pause").onclick = function () {
+                clearInterval(interval);
+            }
+            $("stop").onclick = function () {
+                clearInterval(interval);
+                count =0;
+                $("id_second").innerHTML="00"
+                $("id_minute").innerHTML="00"
+                $("id_hour").innerHTML ="00"
+            };
+
+        }
+
+        function show(num) {
+            if(String(num).length < 2) {
+                return "0" + num;
+            }
+            return num;
+        }
+
+    </script>
+</head>
+<body>
+<div>
+    <span id="id_hour">00</span>
+    <span>:</span>
+    <span id="id_minute">00</span>
+    <span>:</span>
+    <span id="id_second">00</span>
+</div>
+
+        <button id="start">开始</button><br/>
+        <button id="pause">暂停</button><br/>
+        <button id="stop">停止</button>
+</body>
+</html>

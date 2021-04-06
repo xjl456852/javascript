@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        /*
+        DOM2事件,可以给一个元素添加多个事件,并且可以指定是什么类型,捕获还是冒泡.
+        常规的一个元素添加事件,只能添加一个事件,新增的时间会覆盖之前添加过的事件.
+        新浏览器支持
+        node.addEventListener(事件名(不含on), 函数, boolean)
+        boolean 默认为false, 为冒泡事件; 如果为true,则为捕获事件.
+        node.removeEventListener(事件名(不含on), 函数)
+        IE浏览器支持:
+        node.attachEvent(事件名(包含on), 函数)
+        node.detachEvent(事件名(包含on), 函数)
+         */
+        window.onload = function () {
+            var outer = document.getElementById("outer");
+            var inner = document.getElementById("inner");
+            //常规添加事件,只能添加一个,后面的事件会覆盖前面的事件.
+            // outer.onclick = foo;
+            // outer.onclick = bar;
+
+            //添加事件,冒泡事件,点击innert区域,先执行innerFun再foo,后bar
+            // outer.addEventListener("click", foo, false);
+            // outer.addEventListener("click", bar, false);
+            // inner.addEventListener("click", innerFun,false)
+
+            //移除事件
+            // outer.addEventListener("click", foo, false)
+            // outer.removeEventListener("click", foo)
+
+            //捕获事件,点击inner区域,先执行foo,再执行baz,再执行bar.
+            // inner.addEventListener("click", bar, true)
+            // outer.addEventListener("click", foo, true)
+            // outer.addEventListener("click", baz, true)
+
+            //封装函数
+            // addEvent(outer, "click", foo)
+            // removeEvent(outer,"click", foo)
+
+
+            //完整的捕获和冒泡,先进行捕获,到达目标后,进行冒泡.
+            //所以在点击inner区域后,下面的执行顺序是: foo->bar->innerFun->baz
+            inner.addEventListener("click", bar, true)
+            inner.addEventListener("click", innerFun, false)
+            outer.addEventListener("click", foo, true)
+            outer.addEventListener("click", baz, false)
+
+            function foo() {
+                console.log("foo")
+            }
+            function bar() {
+                console.log("bar")
+            }
+            function innerFun() {
+                console.log("innerFun")
+            }
+            function baz() {
+                console.log("baz")
+            }
+        };
+        //封装函数来执行兼容ie浏览器
+        function addEvent(obj, type, fun) {
+            if (obj.addEventListener) {
+                obj.addEventListener(type, fun, false)
+            } else {
+                obj.attachEvent("on"+type,fun)
+            }
+        }
+        function removeEvent(obj, type, fun) {
+            if (obj.removeEventListener) {
+                obj.removeEventListener(type, fun)
+            } else {
+                obj.detachEvent("on"+type,fun)
+            }
+        }
+    </script>
+    <style>
+        #outer{
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+        #inner{
+            width: 100px;
+            height: 100px;
+            background: blue;
+        }
+
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner"></div>
+</div>
+</body>
+</html>

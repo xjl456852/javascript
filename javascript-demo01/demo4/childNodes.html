@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript">
+    window.onload = function () {
+        /*
+        node.childNodes 用来获取当前元素的所有子节点.
+        获取的节点类型中,包含两种节点类型:
+            1.元素节点
+            2.文本节点
+
+
+           DOM的节点类型一共有三种:
+           1. 元素节点 2.属性节点 3.文本节点.
+           他们又有三个重要的属性:
+           nodeName, nodeType, nodeValue
+          [注]文本节点的nodeValue会包含空格换行之类的特殊字符.但不包含html内容.
+
+           node.firstChild 获取当前元素的第一个子节点
+           node.lastChild 获取当前元素的最后一个子节点
+
+            元素节点之间的空白字符串,包含空格 换行之类的,都会被childNodes获取到,并被当做文本节点.
+
+         */
+        let elementById = document.getElementById("div1");
+        let childNodes = elementById.childNodes;
+        console.log(""+childNodes) //[object NodeList]
+        console.log("未换行节点数量:"+childNodes.length); //5
+        for (let i = 0; i < childNodes.length; i++) {
+            console.log("------");
+            console.log(childNodes[i])
+            console.log(childNodes[i].nodeName); //元素的nodeName是大写的
+            console.log(childNodes[i].nodeType);
+            console.log(childNodes[i].nodeValue);
+        }
+
+        console.log(elementById.firstChild);
+        console.log(elementById.lastChild);
+
+        let elementById1 = document.getElementById("div2");
+        let childNodes1 = elementById1.childNodes;
+        console.log("换行节点数量:"+childNodes1.length); //7
+        for (let i = 0; i < childNodes1.length; i++) {
+            console.log("=========")
+            console.log(childNodes1[i])
+            console.log(childNodes1[i].nodeName);
+            console.log(childNodes1[i].nodeType);
+            console.log(childNodes1[i].nodeValue);
+        }
+
+        console.log("-=-=-=- 获取空白子节点")
+        let removeSpaceNode1 = removeSpaceNode(childNodes1);
+        console.log("移除换行节点数量:"+removeSpaceNode1.length);
+
+        //删除空白子节点
+        removeSpaceNode2(elementById1);
+
+        let elementById2 = document.getElementById("div2");
+        console.log(elementById2.childNodes.length) //5
+    };
+
+    /**
+     * 删除空白节点,但原有父节点下面的子节点数没变
+     * @param node
+     */
+    function removeSpaceNode(node) {
+        let result = [];
+        for (let i=0; i<node.length; i++) {
+            if (node[i].nodeType == 3 && /^\s+$/.test(node[i].nodeValue)) {
+                continue;
+            }
+            result.push(node[i]);
+        }
+        return result;
+    }
+
+    /**
+     * 从父节点中删除子节点中的空白元素, 删除后作用于原父节点下的子节点数量,子节点会发生变化
+     * 删除需要倒着删除,否则会跳过一些节点,跟java中一样
+     * @param node
+     */
+    function removeSpaceNode2(node) {
+        let childNodes = node.childNodes;
+        for (let i=childNodes.length-1; i>=0; i--) {
+            if (childNodes[i].nodeType == 3 && /^\s+$/.test(childNodes[i].nodeValue)) {
+                //删除子节点
+                node.removeChild(childNodes[i]);
+            }
+        }
+    }
+</script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 下面的文本节点会被分隔为两个部分，会返回两个元素。 -->
+<div id="div1"><em>斜体</em>内<i>hha</i>部<strong>粗体</strong></div>
+<!--如果元素与元素之间有换行,则换行会被当做文本节点 -->
+<div id="div2">
+    <em>斜体</em>
+    内
+    <i>hha</i>
+    部
+    <strong>
+        粗体
+    </strong>
+</div>
+</body>
+</html>

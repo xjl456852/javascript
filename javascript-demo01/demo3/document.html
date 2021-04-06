@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+
+       /*
+         DOM document object model 文档对象模型
+        从<html>开始到</html>结束的内容.就是dom内容.
+        dom是打通html,css和js壁垒的工具.
+        在js中所有的节点都是对象,也就是他们都有属性和方法.
+
+        节点分为三个部分,比如下面的
+        <div title="点我">测试div</div>
+        元素节点: <div></div>
+        属性节点: title="点我"
+        文本节点: 测试div
+
+
+        document.getElementById("id") 通过id获取节点对象.
+        因为html文件是从上到下顺序解析的.
+        执行js时,元素的html节点都没有解析完.如果这时直接获取html节点,会出现undefined.
+        需要使用window.onload 页面加载完之后执行的函数.
+
+        元素的节点属性:
+            tagName 获取元素的标签名
+            innerHtml 获取元素标签节点间的内容,也可以赋值,直接在html中解析.
+
+        html属性的属性
+            id
+            title
+            style  这个也是一个对象,可以通过访问属性的方式继续访问它
+            className
+        访问这些属性:
+            元素节点.属性名 //如果通过这种方式访问,属性名中如果有中划线的,需要转为驼峰的方式进行访问
+            元素节点["属性名"] //这种属性名如果有中划线,写原生的或驼峰的都行.
+
+        */
+
+        window.onload = function () {
+            const elementById = document.getElementById("div1");
+            // console.log(elementById.tagName);
+            // console.log(elementById.innerHTML);
+            // elementById.innerHTML = "<h1>内容</h1>"
+
+            // console.log(elementById.id);
+            // console.log(elementById.title);
+            // console.log(elementById.style);
+            // console.log(elementById.className);
+
+            elementById.style.width = "400px";
+            console.log(elementById.style.height); //300px
+            console.log(elementById.style.backgroundColor); //访问属性,变量不能使用中划线.
+            console.log(elementById.style["backgroundColor"]); //访问属性
+            console.log(elementById.style["background-color"]); //访问属性
+        };
+
+
+    </script>
+</head>
+<body>
+<div id="div1" title="点我" class="box" style="width:300px;height:300px;background-color:yellow"><em>内部内容</em></div>
+
+</body>
+</html>

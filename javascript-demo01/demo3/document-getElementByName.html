@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        /*
+            document.getElementsByName("标签属性中为name的属性值");
+            不支持从node节点下获取getElementsByName
+            一般只有在input标签中有name属性,其它的标签没有name属性,虽然可以这样写,也可以这样用.
+
+         */
+        window.onload = function () {
+            let elementsByName = document.getElementsByName("hello");
+            console.log("" + elementsByName) //[object NodeList]
+            for(var i=0; i<elementsByName.length; i++) {
+                console.log(elementsByName[i])
+            }
+        };
+    </script>
+</head>
+<body>
+<div name="hello"></div>
+<span name="hello"></span>
+<input type="text" name="hello">
+<div><span name="hello"></span></div>
+</body>
+</html>

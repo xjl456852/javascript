@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        // history对象
+        //属性
+        // history.length 表示有多少条历史记录
+
+        //方法:
+        // history.back(); 后退
+        // history.forward(); 前进
+        // history.go(); 参数为0或无参时,重载当前页面,为正数时,前进对应数量的历史记录,为负数时,后退对应数量的历史记录.
+        // 如果历史记录的数量不够前进或后退的数量时,则不执行任何操作.
+        window.onload = function () {
+            let elementById = document.getElementById("count");
+            elementById.onclick = function () {
+                console.log(window.history.length);
+            }
+
+            let elementById1 = document.getElementById("back");
+            elementById1.onclick = function () {
+                window.history.back()
+            }
+            let forward = document.getElementById("forward");
+            forward.onclick = function () {
+                window.history.forward()
+            }
+            let go = document.getElementById("go");
+            go.onclick = function () {
+                // window.history.go(0)
+                // history.go(2)
+                history.go(-2)
+            }
+        };
+    </script>
+</head>
+<body>
+<button id="count">历史数量</button>
+<button id="back">后退</button>
+<button id="forward">前进</button>
+<button id="go">go</button>
+</body>
+</html>

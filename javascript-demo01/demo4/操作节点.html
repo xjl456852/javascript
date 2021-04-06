@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../tool/tools.js"></script>
+    <script type="text/javascript">
+        /*
+        createElement()
+        格式: document.createElement("标签名");
+        功能:创建一个这个标签名的元素节点
+
+        appendChild()
+        格式: parentNode.appendChild(newNode);
+        功能: 将newNode添加到parentNode子节点的末尾
+
+        createTextNode() //这个文本节点最后也要通过appendChild() 添加到一个节点中.
+        格式: document.createTextNode("文本")
+        功能: 创建一个文本节点
+
+        insertElement()
+        格式: parentNode.insertElement(newNode, oldNode)
+        功能: 将parentNode下的子节点中的oldNode前面插入newNode
+
+        没有insertAfter()
+        需要自己封装
+
+        replaceChild()
+        格式: parent.replaceChild(newNode, oldNode)
+        功能:  将parent下的oldNode,替换为newNode
+
+        cloneNode()
+        克隆节点,如果用一个已有的节点去插入到另一个位置,那么原有的节点就会被删除,如果原有的节点不想被删除,那么应该cloneNode一个节点.
+        格式: node.cloneNode(boolean)
+        功能: 创建一个克隆的节点,参数默认为false, 不克隆节点元素的文本节点. 如果设置为true,则会克隆节点元素的文本节点.
+
+        removeChild()
+        删除节点:
+        格式: parent.removeChild(节点)
+        功能:删除parent下面的 节点
+         */
+        window.onload = function () {
+            //新增节点
+            let elementById = document.getElementById("btn");
+            let elementById1 = document.getElementById("div1");
+            elementById.onclick = function () {
+              /*  //创建一个节点
+                let htmlSpanElement = document.createElement("span");
+                //可以再给节点中增加文本属性
+                let text = document.createTextNode("文本属性");
+                //将文本属性添加到节点中
+                htmlSpanElement.appendChild(text)
+                //然后再将节点添加到一个节点中.
+                elementById1.appendChild(htmlSpanElement);*/
+
+                elementById1.appendChild(createElementWithText("span", "文本"))
+            };
+
+
+            //节点前插入节点;在节点后插入节点
+            let elementById2 = document.getElementById("btn1");
+            let elementById4 = document.getElementById("p1");
+            elementById2.onclick = function () {
+                let elementWithText = createElementWithText("i", "文本");
+                elementById4.parentNode.insertBefore(elementWithText, elementById4)
+
+
+                insertAfter(createElementWithText("strong", "strong文本"),elementById4)
+            };
+
+            //替换节点,删除节点,克隆节点
+
+            let elementById5 = document.getElementById("btn2");
+            let elementById3 = document.getElementById("p2");
+            elementById5.onclick = function () {
+            //替换
+                /*let elementWithText1 = createElementWithText("div", "div文本");
+                elementWithText1.setAttribute("id", "divDynamic")
+                elementById3.parentNode.replaceChild(elementWithText1,elementById3 )*/
+
+                //clone 直接插入,原有的节点位置会消失
+                // elementById3.parentNode.insertBefore(elementById3, document.getElementById("em1"))
+                //通过clone来进行插入,这种不包含文本节点
+                // elementById3.parentNode.insertBefore(elementById3.cloneNode(), document.getElementById("em1"))
+                //这种包含文本节点
+                // elementById3.parentNode.insertBefore(elementById3.cloneNode(true), document.getElementById("em1"))
+
+                // removeChild
+                elementById3.parentNode.removeChild(elementById3);
+            }
+
+        };
+
+        /**
+         * 封装函数创建一个节点并增加元素中的文本
+         */
+        function createElementWithText(elementName, text) {
+            let element = document.createElement(elementName);
+            element.appendChild(document.createTextNode(text));
+            return element;
+        }
+
+        /**
+         * 给一个节点的后面节点插入元素
+         * @param newNode
+         * @param oldNode
+         */
+        function insertAfter(newNode, oldNode ) {
+            let parentNode = oldNode.parentNode;
+            //删除空白节点
+            removeSpaceNode2(parentNode)
+            if(oldNode == parentNode.lastChild) {
+                parentNode.appendChild(newNode);
+            } else {
+                parentNode.insertBefore(newNode,oldNode.nextSibling)
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1">
+    <em>weew</em>
+    <p>32</p>
+</div>
+<div id="div2">
+    <em>weew</em>
+    <p id="p1">32</p>
+    <span>ad</span>
+</div>
+<div id="div3">
+    <em id="em1">weew</em>
+    <p id="p2">32</p>
+    <span>ad</span>
+</div>
+<button id="btn">按钮</button>
+<button id="btn1">按钮1</button>
+<button id="btn2">按钮2</button>
+</body>
+</html>

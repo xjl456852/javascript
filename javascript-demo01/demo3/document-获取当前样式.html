@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            let elementById = document.getElementById("div1");
+            //这种方式只能获取行内样式,无法获取非行内样式
+            console.log(elementById.style.width);
+            console.log(elementById.style.backgroundColor); //无法获取行内样式以外的样式.
+
+            // 获取当前有效样式
+            // getComputedStyle(元素节点) //火狐/谷歌/safari 都支持
+            // 元素节点.currentStyle["样式属性"] //ie支持
+            console.log(getComputedStyle(elementById).backgroundColor);
+            console.log(getStyle(elementById,"backgroundColor"));
+
+
+
+        };
+
+        function getStyle(ele, attr) {
+            //判断是否存在currentStyle
+            return ele.currentStyle ? ele.currentStyle[attr] : getComputedStyle(ele)[attr];
+        }
+    </script>
+    <style>
+        #div1 {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+<div id="div1" style="width: 200px; height: 200px;">123</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    用来清除空白元素节点-->
+    <script type="text/javascript" src="../tool/tools.js"></script>
+    <script type="text/javascript">
+        /*
+        ownerDocument 属性:
+            返回该节点的文档对象根节点,返回的对象就是document
+        parentNode 属性: 返回该节点的父节点.
+        previousSibling 属性: 返回该节点的前一个同级节点
+        nextSibling 属性: 返回该节点的后一个同级节点
+
+
+        属性节点:
+            attributes 属性: 返回该节点的属性节点集合
+         */
+        window.onload = function () {
+            let elementById = document.getElementById("div1");
+            console.log(elementById.ownerDocument == document); //true
+            //从父节点中移除空白节点.
+            removeSpaceNode2(elementById.parentNode);
+            console.log(elementById.parentElement);
+            console.log(elementById.previousSibling);
+            console.log(elementById.nextSibling);
+
+
+            let elementById1 = document.getElementById("div2");
+            let attributes = elementById1.attributes;
+            console.log(""+attributes);//[object NamedNodeMap]
+            console.log(attributes.length);//3
+            //访问一个属性节点的方式:
+            // 方式一:
+            console.log(""+attributes.getNamedItem("id")); //[object Attr]
+            //方式二:
+            console.log(""+attributes["id"]); //[object Attr]
+
+            //访问节点的属性
+            console.log(attributes.getNamedItem("id").nodeName);//id
+            console.log(attributes.getNamedItem("id").nodeType);//2
+            console.log(attributes.getNamedItem("id").nodeValue);//div2
+        };
+    </script>
+</head>
+<body>
+<span></span>
+<div id="div1"></div>
+<div id="div2" title="名称" class="box"></div>
+</body>
+</html>

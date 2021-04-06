@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        /*
+        事件冒泡:
+        如果点击inner区域,会先触发inner事件,再触发outer时间. 先从确定的地方再到不确定的地方.
+        阻止冒泡:
+        从确定的位置中,调用
+         e.cancelBubble = true; //这种写法需要被淘汰.
+         e.stopPropagation()  //提倡用这种写法
+        不同之处在于stopPropagation属于W3C标准，适用于Firefox,chrome,opera等浏览器,但是不支持IE浏览器。
+        相反cancelBubble不符合W3C标准，而且只支持IE浏览器。所以很多时候,在新版本chrome,opera浏览器中已经支持，我们都要结合起来用
+         */
+        window.onload = function () {
+            let outer = document.getElementById("outer");
+            let inner = document.getElementById("inner");
+            outer.onclick = function (e) {
+                console.log("outer")
+            }
+            inner.onclick = function (e) {
+                var evn = e || event;
+                console.log("inner")
+                if(evn.stopPropagation) {
+                    evn.stopPropagation()
+                } else {
+                    evn.cancelBubble = true;
+                }
+
+            }
+        };
+    </script>
+    <style>
+        #outer{
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+        #inner{
+            width: 100px;
+            height: 100px;
+            background: blue;
+        }
+
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner"></div>
+</div>
+</body>
+</html>

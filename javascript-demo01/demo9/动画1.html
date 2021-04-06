@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        /* 可以让页面滚动条隐藏 */
+        body {
+            overflow: hidden;
+        }
+        div {
+            height: 200px;
+            width: 200px;
+            background: #000;
+            position: relative;
+            left: 0;
+            top: 0;
+        }
+        div:nth-of-type(2) {
+            height: 100px;
+            width: 100px;
+            background: red;
+            position: absolute;
+            left: 300px;
+            top: 400px;
+
+        }
+    </style>
+    <script type="text/javascript">
+        let div1 =null;
+        let div2 =null;
+        window.onload = function () {
+            div1 = document.querySelector("div");
+            div2 = document.querySelector("div:nth-of-type(2)");
+            //x方向速度
+            div1.speedX = 3;
+            //y速度
+            div1.speedY = 2;
+
+            div2.speedX = 3;
+            //y速度
+            div2.speedY = 2;
+
+            setInterval(()=>move(div1),10)
+            setInterval(()=>move(div2),10)
+        };
+
+
+        function move(div) {
+//检查并改变方向
+            let b = checkBlockCollide(div1, div2);
+            if(b) {
+                let tempX = div1.speedX;
+                let tempY = div1.speedY;
+
+                div1.speedX = div2.speedX;
+                div1.speedY = div2.speedY;
+
+                div2.speedX = tempX;
+                div2.speedY = tempY;
+
+            }
+            checkAndChange(div)
+
+            //必须在检查完碰撞后再进行移动处理.
+
+            // console.log(htmlDivElement+"") //[object HTMLDivElement]
+            let computedStyle = window.getComputedStyle(div);
+            // console.log(computedStyle+"--") //[object CSSStyleDeclaration]
+            let left = parseInt(computedStyle.getPropertyValue("left"));
+            //这种也能获取css属性,下面两种都能获取.
+            // computedStyle.left;
+            // console.log(computedStyle.left)
+            // console.log("==="+ div.style.left)
+            let top = parseInt(computedStyle.getPropertyValue("top"));
+            div.style.left = left + div.speedX + "px"
+            div.style.top = top + div.speedY + "px"
+        }
+
+        /**
+         * 检查和修改元素运动方向
+         * 如果div超出body的边界则让其以相反方向运动.
+         * @param ele
+         */
+        function checkAndChange(ele) {
+            let style = window.getComputedStyle(ele);
+            let left = parseInt(style.getPropertyValue("left"));
+            let top = parseInt(style.getPropertyValue("top"));
+            let width = parseInt(getComputedStyle(ele).getPropertyValue("width"));
+            let height = parseInt(getComputedStyle(ele).getPropertyValue("height"));
+            if(left < 0) {
+                left = 0;
+                ele.speedX *= -1;
+            }
+
+            if(top < 0) {
+                top = 0;
+                ele.speedY *= -1;
+            }
+
+            if (left +  width > window.innerWidth) {
+                left = window.innerWidth - width;
+                ele.speedX *= -1;
+            }
+            if (top + height > window.innerHeight) {
+                top = window.innerHeight - height;
+                ele.speedY *= -1;
+            }
+            ele.style.top = top + "px";
+            ele.style.left = left + "px";
+        }
+
+        /**
+         * 检测两个block是否相撞
+         * 通过两个元素的中心坐标的横坐标和纵坐标的差值,是否小于两个元素的宽度和高度总和的一半,来判断是否相撞
+         * @param block1
+         * @param block2
+         */
+        function checkBlockCollide(block1, block2) {
+            let style1 = window.getComputedStyle(block1);
+            let style2 = window.getComputedStyle(block2);
+            let left1 = parseInt(style1.getPropertyValue("left"));
+            let left2 = parseInt(style2.getPropertyValue("left"));
+
+            let top1 = parseInt(style1.getPropertyValue("top"));
+            let top2 = parseInt(style2.getPropertyValue("top"));
+
+            let width1 = parseInt(style1.getPropertyValue("width"));
+            let width2 = parseInt(style2.getPropertyValue("width"));
+
+            let height1 = parseInt(style1.getPropertyValue("height"));
+            let height2 = parseInt(style2.getPropertyValue("height"));
+
+            let center1 = {
+                x: left1 + width1/2,
+                y: top1 + height1/2
+            }
+            let center2 = {
+                x: left2 + width2/2,
+                y: top2 + height2/2
+            }
+            //x 方向的距离
+            let dx = Math.abs((center1.x - center2.x));
+            let dy = Math.abs((center1.y - center2.y));
+            //x方向的距离 小于等于 两个物体的宽度和的一半
+            if( dx <= (width1 + width2)/2 && dy <= (height1 + height2)/2) {
+                return true;
+            }
+            return false;
+
+        }
+
+    </script>
+</head>
+<body>
+<div></div>
+<div></div>
+</body>
+</html>

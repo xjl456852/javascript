@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../tool/tools.js"></script>
+    <script type="text/javascript">
+        /*
+        只做简单7天免登录演示,真实的情况是密码不会放在cookie中,cookie中只是记录了令牌信息.
+         */
+
+        window.onload = function () {
+            let elementsByTagName = document.getElementsByTagName("input");
+            //自动填充用户名和密码
+            elementsByTagName[0].value = getCookie(elementsByTagName[0].name) || ""
+            elementsByTagName[1].value = getCookie(elementsByTagName[1].name)||""
+
+
+        };
+
+        //登录时判断是否保存用户名和密码,只做简单演示.
+        function login() {
+            let elementsByTagName = document.getElementsByTagName("input");
+            if(elementsByTagName[2].checked) {
+                setCookie(elementsByTagName[0].name, elementsByTagName[0].value, 7);
+                setCookie(elementsByTagName[1].name, elementsByTagName[1].value, 7);
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="text" name="username">
+<input type="password" name="password">
+<input type="checkbox" name="check">7天免登录
+<input type="button" onclick="login()" value="登录">
+</body>
+</html>

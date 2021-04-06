@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        /*
+        document.getElementByClassName("class属性的值")
+        node.getElementByClassName("class属性的值") 获取所有node下的,符合条件的节点元素
+        通过className 获取元素,返回符合条件的元素数组
+
+        getElementByClassName 低版本的ie浏览器不兼容,让ie去死吧
+         */
+        window.onload = function () {
+            let elementsByClassName = document.getElementsByClassName("box1");
+            console.log(""+elementsByClassName) //[object HTMLCollection]
+            console.log(elementsByClassName.length) //3
+            for (let i = 0; i < elementsByClassName.length; i++) {
+                console.log(elementsByClassName[i]);
+            }
+
+            let elementById = document.getElementById("u1");
+            let elementByClassName = getElementByClassName(elementById, "box1");
+            console.log("-----")
+            for (let i = 0; i < elementByClassName.length; i++) {
+                console.log(elementByClassName[i]);
+            }
+        };
+
+        //封装一个函数,来兼容低版本ie,纯粹为了封装而封装
+        function getElementByClassName(parent, className) {
+            //获取这个节点下的所有节点
+            let elementsByTagName = parent.getElementsByTagName("*");
+            var result = [];
+            for(var i=0; i<elementsByTagName.length; i++) {
+                if (elementsByTagName[i].className == className) {
+                    result.push(elementsByTagName[i])
+                }
+            }
+            return result;
+        }
+
+    </script>
+</head>
+<body>
+<ul id="u1">
+    <li>11</li>
+    <li class="box1">21</li>
+    <li class="box1">31</li>
+</ul>
+<ol>
+    <li>4</li>
+    <li class="box1">5</li>
+    <li>6</li>
+</ol>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            let elementById = document.getElementById("div1");
+            elementById.onclick = function (e) {
+                var ev = e || event;
+                //可见的页面范围距离鼠标点击的距离.x是离左边可见范围的距离,y是离右边可见范围的距离
+                //这个div中包含了body自带的padding的距离.所以顶点距离边缘就有8像素.
+                console.log(ev.clientX, ev.clientY);
+                //如果页面大于可见范围,也就是页面比较长,这个x和y就是距离原始滚动到最顶部/左边的距离
+                console.log(ev.pageX, ev.pageY);
+                //这个是距离事件源的距离,时间源是div元素,就是距离这个div元素左上角顶点的距离.
+                console.log(ev.offsetX, ev.offsetY);
+            }
+        };
+    </script>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 1000px;
+            background: red;
+        }
+    </style>
+
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>

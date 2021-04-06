@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+    /*
+
+        通过标签名来获取符合条件的元素,标签名没有特殊语法
+        //标签名可以使用通配符
+        document.getElementsByTagName("标签名");
+        node节点.getElementsByTagName("标签名");
+        [注] 从node节点开始找出所有符合条件的元素节点
+        参数: 标签名
+        功能: 获取当前页面上所有符合该标签名标准的元素节点
+        返回值: 一个装有所有符合条件的元素节点数组
+     */
+
+        window.onload = function () {
+            let elementsByTagName = document.getElementsByTagName("li");
+            console.log(""+elementsByTagName); //[object HTMLCollection]
+
+            //通过节点元素获取.
+            let elementById = document.getElementById("u1");
+            let elementsByTagName1 = elementById.getElementsByTagName("li");
+            console.log(elementsByTagName1)
+            for(var i=0; i<elementsByTagName1.length; i++) {
+                //两种方法都能获取元素对象
+                // console.log(elementsByTagName1[i].innerHTML)
+                console.log(elementsByTagName1.item(i).innerHTML)
+            }
+        };
+    </script>
+</head>
+<body>
+
+    <ul id="u1">
+        <li>11</li>
+        <li>21</li>
+        <li>31</li>
+    </ul>
+    <ol>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ol>
+</body>
+</html>

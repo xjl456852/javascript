@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        /*
+            使用事件委托将元素的时间添加到父级中.
+
+            e.srcElement为ie浏览器使用.
+            e.target 为firefox,chrome中使用
+            这两个都是指向触发事件的元素
+         */
+        window.onload = function () {
+            let oUl = document.getElementsByTagName("ul")[0];
+            let lis = document.getElementsByTagName("li");
+            //因为不能给新增的元素添加事件,所以不用这种方式.
+            /*for (let i = 0; i < lis.length; i++) {
+                let li = lis[i];
+                li.onclick = function (e) {
+                    console.log(li.innerHTML)
+                }
+            }*/
+            oUl.onclick = function (e) {
+                var _target = e.target || e.srcElement;
+                if(_target.nodeName.toUpperCase() == "LI") {
+                    console.log(_target.innerHTML)
+                }
+            }
+            //如果此时新增元素,新增的元素将没有事件,所以需要事件委托给父级,这样无论动态增加多少子元素,都会有点击事件
+            for (let i=0; i<5; i++) {
+                let htmlliElement = document.createElement("li");
+                htmlliElement.appendChild(document.createTextNode(i))
+                oUl.appendChild(htmlliElement)
+            }
+        };
+    </script>
+    <style>
+        li{
+            margin: 10px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+</body>
+</html>

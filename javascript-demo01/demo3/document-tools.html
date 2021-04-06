@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../tool/tools.js"></script>
+    <script type="text/javascript">
+
+        window.onload = function () {
+            console.log($("#div1").innerHTML);
+            console.log($(".box1")[0].innerHTML);
+            console.log($(".box1")[1].innerHTML);
+            console.log($("name=age")[0].innerHTML);
+        };
+
+    </script>
+</head>
+<body>
+<div id="div1">11</div>
+<div class="box1">22</div>
+<div class="box1">33</div>
+<div name="age">44</div>
+
+</body>
+</html>

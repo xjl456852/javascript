@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        /*
+        浏览器的默认行为:
+        javascript事件本身所具有的属性,例如a标签跳转,submit按钮的提交,右键菜单, 文本框的输入等.
+        阻止默认行为的方式有三种,都可以使用:
+        event.preventDefault();
+        event.returnValue= false;
+        return false;
+
+        阻止事件的默认行为:
+
+         */
+        window.onload = function () {
+            let elementsByTagName = document.getElementsByTagName("a")[0];
+            //阻止链接的默认事件
+            elementsByTagName.onclick = function (e) {
+                //因为每次都跳转刷新页面,所以看不到输出.
+                //所以需要阻止默认事件来进行阻止跳转.
+                console.log("a click")
+                //以下三种方式都可以阻止默认事件.
+                // e.preventDefault();
+                // e.returnValue = false;
+                return false;
+            }
+            //阻止表单的默认事件
+            let elementsByTagName1 = document.getElementsByTagName("input");
+            elementsByTagName1[1].onclick = function (e) {
+                //测试阻止默认事件
+                console.log("submit click")
+                e.returnValue = false;
+            }
+            //阻止输入框的默认事件,进制输入框输入,这个只能阻止输入英文,不能阻止输入汉字
+            //如果要禁止输入汉字,还得加入this.blur();禁止获取焦点.还得对onfocus进行处理.
+            elementsByTagName1[0].onkeydown =jinzhi;
+            elementsByTagName1[0].onfocus  = jinzhi;
+            function jinzhi(e) {
+                console.log("input key down")
+                this.blur();
+                return false;
+            }
+            //禁止鼠标右键菜单
+            document.oncontextmenu = function (e) {
+                return false;
+            }
+        };
+    </script>
+</head>
+<body>
+<a href="">test</a>
+<form action="">
+    <input type="text">
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

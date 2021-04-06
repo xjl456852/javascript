@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            let elementsByTagNameElement = document.getElementsByTagName("div")[0];
+            let child = elementsByTagNameElement.children[0];
+            elementsByTagNameElement.onmousemove = function (e) {
+                var ev = e || event;
+                child.innerHTML= ev.clientX+","+ev.clientY+ "px";
+            }
+            elementsByTagNameElement.onmouseout = function (e) {
+                child.innerHTML = ""
+            }
+        };
+    </script>
+    <style>
+        div {
+            width: 400px;
+            height: 500px;
+            border: 2px solid #eee;
+            position: relative;
+        }
+        span {
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div><span></span></div>
+</body>
+</html>

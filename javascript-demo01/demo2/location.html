@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        // window.location, location, window.document.location 他们是同一个对象.
+        console.log("是否相同:"+(window.location == window.document.location)) //true
+
+        //location 属性,都可以获取和赋值.
+        // url整个完整路径:
+        // href=protocol+//+host+pathname+search+hash
+        console.log(location.protocol+"//"+location.host+location.pathname+location.search+location.hash)
+        console.log(location.href)
+
+        // 属性:
+        // hash表示页面中的锚点.可以定位页面的具体位置
+        //如果访问地址中带#abcd,那么下面输出就是#abcd
+        // console.log(window.location.hash);
+        // 也可以赋值
+        // location.hash = "#abcd"
+
+        // host = 主机名:端口
+        console.log(location.host)
+        //port 端口
+        //hostname 主机名
+
+        //href 整个url
+
+        //pathname 路径名,浏览器中的路径
+        console.log(location.pathname)
+        //protocol 协议 输出: http:
+        console.log(location.protocol)
+        //search 查询字符串,输出?后面的内容,不包含锚点 比如: ?ab=12&cd=23
+        console.log(location.search)
+        //还可以赋值
+        // location.search = "?ab=11&ac=12"
+
+
+        //location方法
+        // assign(url) 调转到指定连接,会产生history记录.
+        //reload(true?) 重新加载,如果传入true,则忽略本地缓存强行重新加载,传参的方法已经过期.
+        //replace(url) 替换url,不会产生history记录.
+
+        window.onload = function () {
+            let elementById = document.getElementById("btn");
+            elementById.onclick = function () {
+
+                // location.assign("http://www.baidu.com")
+                // location.reload()
+                location.replace("http://www.baidu.com")
+
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+<button id="btn">点我</button>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>12</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>2</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>12</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>7</p>
+<p id="abcd">9</p>
+<p>2</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>66</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>18</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>22</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>3</p>
+<p>18</p>
+</body>
+</html>

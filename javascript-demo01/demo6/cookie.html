@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        /*
+        cookie格式:
+        key=value;expires=过期时间
+        如果expires小于当前时间,则cookie会被删除.
+        如果不设置expires,那么这个cookie就是session级别的,关闭浏览器窗口就会被删除.
+        多个cookie可以直接赋值到document.cookie,不存在的cookie会被添加进去.
+         */
+
+        //查询cookie
+        console.log(document.cookie);
+        //给date对象增加一个clone方法.
+        Date.prototype.clone=function(){
+            return new Date(this.valueOf());
+        }
+
+        var d = new Date()
+        //在天上增加几天,设置过期时间比当前时间大,则cookie有效.
+        d.setDate(d.getDate()+2)
+
+        //创建一个过期的世界
+        let clone = d.clone();
+        clone.setDate(d.getDate() - 5);
+
+        //增加cookie,添加多个cooike,下面新增了三个cookie
+        document.cookie = "abc=xiejl;expires="+d;
+        document.cookie = "a=x;expires="+d;
+        document.cookie = "b=ss;expires="+d;
+
+        //添加一个session级临时cookie,关闭窗口会失效,得先打开浏览器,查看cookie
+        // 再注释js代码,退出整个浏览器, 再重新打开浏览器,在对比其他cookie.
+        document.cookie = "c=123"
+
+        //修改cookie,只需要相同的key名称,不同 value就行.
+        document.cookie = "a=10;expires="+d
+
+        //删除cookie
+        document.cookie = "c=12;expires="+clone
+
+
+        // 对cookie的增删改查进行封装:
+        // 测试封装cookie函数
+        console.log(getCookie("abc"));;
+        setCookie("d", 100, 2);
+        removeCookie("a")
+
+        /**
+         *查询cookie
+         */
+        function getCookie(name) {
+            let newCookie = getNewCookie();
+            for (let string of newCookie) {
+                let strings = string.split("=");
+                if (strings[0] == name) {
+                    return strings[1];
+                }
+            }
+        }
+
+        /**
+         * 设置cookie,并设置过期时间.
+         */
+        function setCookie(name, newValue, addDay) {
+            var d = new Date();
+            d.setDate(d.getDate()+addDay)
+            document.cookie = name+"="+newValue+";expires="+d;
+        }
+        /**
+         * 移除cookie
+         */
+        function removeCookie(name) {
+            setCookie(name,1,-1)
+        }
+
+        /**
+         * 获取最新cookie数组,分号后面必须加空格，否则有问题
+         * @returns {string[]}
+         */
+        function getNewCookie() {
+            let cookie = document.cookie;
+            return cookie.split("; ");
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

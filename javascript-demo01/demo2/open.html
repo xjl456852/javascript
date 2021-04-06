@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        //open 方法
+        //open可以有三个参数.
+        //当只有一个参数时
+        window.onload = function () {
+            const elementById = document.getElementById("btn");
+            elementById.onclick = function () {
+                //如果只有一个参数,点击一次就会,打开一个新窗口
+                // open("http://www.baidu.com");
+                //第二个窗口是给新的窗口起一个名字,然后再去加载url, 如果已经有这个名字的窗口,就不会再次打开新窗口,而是只再次加载url
+                // open("http://www.baidu.com","xiejl");
+                //第三个参数是一个字符串.可以由多个参数组成,下面用部分参数列出一部分参数,用逗号分隔:
+                // width 数值 新窗口的宽度,不能小于100
+                // height 数值 新窗口的高度,不能小于100
+                // top 数值 新窗口的y坐标,不能是负数
+                // left 数值 新窗口的x坐标,不能是负数
+                open("http://www.baidu.com","xiejl", "width=300,height=200,top=100,left=100");
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" id="btn" value="打开链接" />
+</body>
+</html>

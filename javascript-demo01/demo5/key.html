@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        //按下任意键都会执行
+        document.onkeydown = function (e) {
+            console.log("onkeydown")
+            //返回boolean, 判断是否按下了alt,ctrl,shift键
+            console.log(e.altKey, e.ctrlKey, e.shiftKey);
+        }
+        //按下字符键才会执行,包含空格之类的特殊字符,不包含tab
+        document.onkeypress = function (e) {
+            console.log("onkeypress")
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

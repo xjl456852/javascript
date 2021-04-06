@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>透明度轮播图</title>
+    <style type="text/css">
+        * {
+            margin:0;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+        }
+        .slider {
+            width: 600px;
+            height: 779px;
+            border: 5px solid #e00;
+            position: relative;
+        }
+        .slider .list .item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            /*这个透明度非常关键*/
+            opacity: 0;
+        }
+        .slider .list .item:first-of-type {
+            opacity: 1;
+        }
+        .slider .list .item img{
+            width: 600px;
+            height: 779px;
+            display: block;
+        }
+        .slider .pre, .slider .next {
+            position: absolute;
+            top:300px
+        }
+        .slider .next {
+            position: absolute;
+            right: 0;
+        }
+        .slider .pagination{
+            position: relative;
+            top: 400px;
+        }
+        .slider .pagination .bullet {
+            /*position: absolute;*/
+            width: 20px;
+            height: 20px;
+            border: 1px solid yellow;
+            background-color: black;
+            left: 100px;
+            float: left;
+            margin-left: 10px;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            line-height: 20px;
+        }
+        .slider .pagination .bullet.focus {
+            background-color: #ff508d;
+        }
+    </style>
+    <script src="animation.js"></script>
+    <script type="text/javascript">
+        window.onload = function (){
+            (function (){
+                let preIndex, nextIndex;
+                let len;
+                let autoId;
+                function init(){
+                    len = document.querySelectorAll(".list .item").length;
+                    preIndex = nextIndex = 0;
+                    document.querySelector(".pre").onclick = function () {
+                        sliderPre();
+                    }
+                    document.querySelector(".next").onclick = function () {
+                        sliderNext();
+                    }
+
+                    let bullets = document.querySelectorAll(".slider .pagination .bullet");
+                    for (let i = 0; i < bullets.length; i++) {
+                        let bullet = bullets[i];
+                        bullet.onclick = () => {
+                            preIndex = nextIndex;
+                            nextIndex = i;
+                            slideTo(preIndex, nextIndex);
+                        }
+                    }
+                    //自动轮播
+                    auto();
+                    let slider = document.querySelector(".slider");
+                    slider.onmouseover = function (){
+                        stop();
+                    }
+                    slider.onmouseout = function () {
+                        auto();
+                    }
+                }
+
+                function sliderNext(){
+                    preIndex = nextIndex;
+                    nextIndex++;
+                    if(nextIndex === len) {
+                        nextIndex=0;
+                    }
+                    slideTo(preIndex, nextIndex);
+                }
+                function sliderPre(){
+                    preIndex = nextIndex;
+                    nextIndex --;
+                    if(nextIndex == -1) {
+                        nextIndex = len-1;
+                    }
+                    slideTo(preIndex, nextIndex);
+                }
+                function slideTo(preIndex, nextIndex) {
+                    let element = document.querySelectorAll(".slider .list .item");
+                    let bullets = document.querySelectorAll(".slider .pagination .bullet");
+                    bullets[preIndex].className = "bullet"
+                    bullets[nextIndex].className = "bullet focus";
+                    animate(element[preIndex], {"opacity":0})
+                    animate(element[nextIndex], {"opacity":1})
+                }
+                function auto() {
+                    clearInterval(autoId);
+                    autoId = setInterval(() => {
+                        sliderNext();
+                    }, 3000);
+                }
+                function stop() {
+                    clearInterval(autoId);
+                }
+                init();
+            })()
+        }
+
+    </script>
+</head>
+<body>
+<div class="slider">
+    <ul class="list">
+        <li class="item"><img src="images/1.jpg" alt=""></li>
+        <li class="item"><img src="images/2.jpg" alt=""></li>
+        <li class="item"><img src="images/3.jpg" alt=""></li>
+        <li class="item"><img src="images/4.jpg" alt=""></li>
+    </ul>
+    <button class="pre">pre</button>
+    <button class="next">next</button>
+    <ul class="pagination">
+        <li class="bullet focus">1</li>
+        <li class="bullet">2</li>
+        <li class="bullet">3</li>
+        <li class="bullet">4</li>
+    </ul>
+</div>
+</body>
+</html>
