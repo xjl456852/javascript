@@ -32,7 +32,7 @@ function animateDetail(ele, property, target) {
 
         //设置速度,随着不断调佣此函数,速度会由大变小.
         //这种在出现小数时上面获取的数值就会变成0,但是数值还没有变化到目标值.所以需要对变化值进行处理
-        let speed = (tar - propertyValue)/ 30;
+        let speed = (tar - propertyValue)/ 10;
         //如果是改变位置的话,可能目标位置在其负方向位置或者正方向位置,有可能会产生正负两种效果.
         speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
         if(tar != propertyValue) {
